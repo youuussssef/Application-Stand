@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Key Club Booking</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#0056b3" />
+</head>
+<body>
+    <header>
+        <img src="img/526778328_781764814207514_5144488882991915914_n.jpg" alt="Key Club Logo" id="logo" />
+        <h1>Key Club – Réservation Stands</h1>
+      </header>
+
+  <main>
+    <form id="bookingForm">
+      <input type="text" id="name" placeholder="Votre nom" required />
+      
+      <label for="stand">Choisissez un stand:</label>
+      <select id="stand" required>
+        <option value="">--</option>
+        <option value="Yatoo">Yatoo</option>
+        <option value="MG Tbelbou">MG Tbelbou</option>
+        <option value="Librairie Raed">Librairie Raed</option>
+        <option value="Librairie Jmaii">Librairie Jmaii</option>
+      </select>
+
+      <label for="time">Choisissez une heure:</label>
+      <select id="time" required>
+        <option value="">--</option>
+        <option value="10–12">10–12</option>
+        <option value="14–16">14–16</option>
+        <option value="16–18">16–18</option>
+        <option value="18–20">18–20</option>
+      </select>
+
+      <button type="submit">Réserver</button>
+    </form>
+
+    <div id="message"></div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

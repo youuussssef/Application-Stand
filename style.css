@@ -1,0 +1,130 @@
+/* Reset */
+* {
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    margin: 0; padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #007bff 0%, #66b3ff 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Header */
+  header {
+    background-color: rgba(0, 123, 255, 0.9);
+    width: 100%;
+    padding: 1.5rem 0;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  
+  /* Main form container */
+  main {
+    margin-top: 90px; /* to avoid header overlap */
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2rem 3rem;
+    border-radius: 15px;
+    width: 350px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+  }
+  
+  /* Form styling */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  label {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #cce4ff;
+  }
+  
+  input, select {
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #333;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  input::placeholder {
+    color: #999;
+  }
+  
+  input:focus, select:focus {
+    box-shadow: 0 0 8px 2px #0056b3;
+  }
+  
+  button {
+    padding: 0.9rem 1rem;
+    background-color: #0056b3;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    letter-spacing: 1.2px;
+  }
+  
+  button:hover {
+    background-color: #003d80;
+  }
+  
+  #message {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #b3e0ff;
+    text-align: center;
+    min-height: 24px;
+  }
+  header {
+    background-color: #0056b3;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+  
+  #logo {
+    height: 40px;
+    width: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  
+  header h1 {
+    color: white;
+    font-weight: 700;
+    font-size: 1.5rem;
+    user-select: none;
+  }
+  main {
+    margin-top: 80px; /* height of header + space */
+  }
