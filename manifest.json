@@ -7,15 +7,17 @@
     "theme_color": "#0056b3",
     "description": "Réservation des stands du Key Club",
     "icons": [
-      {
-        "src": "keyclub-logo.png",
-        "sizes": "192x192",
-        "type": "image/png"
-      },
-      {
-        "src": "keyclub-logo.png",
-        "sizes": "512x512",
-        "type": "image/png"
-      }
-    ]
+  {
+    "src": "img/526778328_781764814207514_5144488882991915914_n-removebg-preview.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  },
+  {
+    "src": "img/526778328_781764814207514_5144488882991915914_n-removebg-preview.png",
+    "sizes": "512x512",
+    "type": "image/png"
   }
+]
+
+  }
+  
