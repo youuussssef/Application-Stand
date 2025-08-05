@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - Réservations</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f0f4ff;
+      color: #222;
+    }
+    h1 {
+      color: #0056b3;
+      margin-bottom: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background: #007bff;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>📋 Réservations des membres</h1>
+  <table id="bookingsTable">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Stand</th>
+        <th>Heure</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC9RWOooS9H2kyp7Ysa8kjtsN-AMbqASRw",
+      authDomain: "keyclub-booking.firebaseapp.com",
+      databaseURL: "https://keyclub-booking-default-rtdb.firebaseio.com",
+      projectId: "keyclub-booking",
+      storageBucket: "keyclub-booking.firebasestorage.app",
+      messagingSenderId: "556273204825",
+      appId: "1:556273204825:web:67cfdf257b025db1a5bb48"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const bookingsRef = ref(db, "bookings");
+
+    const tableBody = document.querySelector("#bookingsTable tbody");
+
+    onValue(bookingsRef, (snapshot) => {
+      tableBody.innerHTML = ""; // clear table
+      const data = snapshot.val();
+      for (let key in data) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${data[key].name}</td>
+          <td>${data[key].stand}</td>
+          <td>${data[key].time}</td>
+        `;
+        tableBody.appendChild(row);
+      }
+    });
+  </script>
+</body>
+</html>
