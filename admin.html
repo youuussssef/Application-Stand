@@ -29,16 +29,38 @@
       background: #007bff;
       color: white;
     }
+    button {
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
     button.delete-btn {
       background-color: #dc3545;
       color: white;
-      border: none;
-      padding: 5px 10px;
-      cursor: pointer;
-      border-radius: 4px;
     }
     button.delete-btn:hover {
       background-color: #c82333;
+    }
+    button.edit-btn {
+      background-color: #007bff;
+      color: white;
+    }
+    button.edit-btn:hover {
+      background-color: #0056b3;
+    }
+    button.save-btn {
+      background-color: #28a745;
+      color: white;
+    }
+    button.save-btn:hover {
+      background-color: #1e7e34;
+    }
+    input.edit-name-input {
+      width: 90%;
+      padding: 4px;
+      font-size: 1rem;
     }
   </style>
 </head>
@@ -50,7 +72,7 @@
         <th>Nom</th>
         <th>Stand</th>
         <th>Heure</th>
-        <th>Action</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -58,7 +80,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+    import { getDatabase, ref, onValue, remove, update } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyC9RWOooS9H2kyp7Ysa8kjtsN-AMbqASRw",
@@ -81,20 +103,25 @@
       const data = snapshot.val();
       for (let key in data) {
         const row = document.createElement("tr");
+        row.dataset.key = key;
         row.innerHTML = `
-          <td>${data[key].name}</td>
+          <td class="name-cell">${data[key].name}</td>
           <td>${data[key].stand}</td>
           <td>${data[key].time}</td>
-          <td><button data-key="${key}" class="delete-btn">Supprimer</button></td>
+          <td>
+            <button class="edit-btn">Modifier</button>
+            <button class="delete-btn">Supprimer</button>
+          </td>
         `;
         tableBody.appendChild(row);
       }
 
-      // Attach event listeners to delete buttons
+      // Delete button handlers
       const deleteButtons = document.querySelectorAll(".delete-btn");
       deleteButtons.forEach(button => {
         button.addEventListener("click", (e) => {
-          const bookingKey = e.target.getAttribute("data-key");
+          const row = e.target.closest("tr");
+          const bookingKey = row.dataset.key;
           if (confirm("Êtes-vous sûr de vouloir supprimer cette réservation ?")) {
             const bookingRef = ref(db, "bookings/" + bookingKey);
             remove(bookingRef)
@@ -107,6 +134,47 @@
           }
         });
       });
+
+      // Edit button handlers
+      const editButtons = document.querySelectorAll(".edit-btn");
+      editButtons.forEach(button => {
+        button.addEventListener("click", (e) => {
+          const row = e.target.closest("tr");
+          const nameCell = row.querySelector(".name-cell");
+          const bookingKey = row.dataset.key;
+          const currentName = nameCell.textContent;
+
+          // Replace name text with input box
+          nameCell.innerHTML = `<input type="text" class="edit-name-input" value="${currentName}" />`;
+
+          // Replace Edit button with Save button
+          e.target.style.display = "none";
+          const saveBtn = document.createElement("button");
+          saveBtn.textContent = "Enregistrer";
+          saveBtn.classList.add("save-btn");
+          e.target.parentNode.insertBefore(saveBtn, e.target.nextSibling);
+
+          saveBtn.addEventListener("click", () => {
+            const newName = nameCell.querySelector("input").value.trim();
+            if (newName === "") {
+              alert("Le nom ne peut pas être vide.");
+              return;
+            }
+            const bookingRef = ref(db, "bookings/" + bookingKey);
+            update(bookingRef, { name: newName })
+              .then(() => {
+                nameCell.textContent = newName;
+                saveBtn.remove();
+                e.target.style.display = "inline-block";
+                alert("Nom mis à jour avec succès !");
+              })
+              .catch((error) => {
+                alert("Erreur lors de la mise à jour : " + error.message);
+              });
+          });
+        });
+      });
+
     });
   </script>
 </body>
