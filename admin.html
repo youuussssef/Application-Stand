@@ -29,6 +29,17 @@
       background: #007bff;
       color: white;
     }
+    button.delete-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    button.delete-btn:hover {
+      background-color: #c82333;
+    }
   </style>
 </head>
 <body>
@@ -39,6 +50,7 @@
         <th>Nom</th>
         <th>Stand</th>
         <th>Heure</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -46,7 +58,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+    import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyC9RWOooS9H2kyp7Ysa8kjtsN-AMbqASRw",
@@ -73,9 +85,28 @@
           <td>${data[key].name}</td>
           <td>${data[key].stand}</td>
           <td>${data[key].time}</td>
+          <td><button data-key="${key}" class="delete-btn">Supprimer</button></td>
         `;
         tableBody.appendChild(row);
       }
+
+      // Attach event listeners to delete buttons
+      const deleteButtons = document.querySelectorAll(".delete-btn");
+      deleteButtons.forEach(button => {
+        button.addEventListener("click", (e) => {
+          const bookingKey = e.target.getAttribute("data-key");
+          if (confirm("Êtes-vous sûr de vouloir supprimer cette réservation ?")) {
+            const bookingRef = ref(db, "bookings/" + bookingKey);
+            remove(bookingRef)
+              .then(() => {
+                alert("Réservation supprimée avec succès !");
+              })
+              .catch((error) => {
+                alert("Erreur lors de la suppression : " + error.message);
+              });
+          }
+        });
+      });
     });
   </script>
 </body>
